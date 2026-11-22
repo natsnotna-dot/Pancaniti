@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="sage">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pancaniti — Grow at your own pace</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="navbar">
+  <a href="#" class="logo">pancaniti<span>✿</span></a>
+  <nav>
+    <a href="#metode">Belajar</a>
+    <a href="#belajar">Timer</a>
+    <a href="#progres">Statistik</a>
+    <a href="#suara">Suara</a>
+    <a href="#jadwal">Jadwal</a>
+    <a href="#komunitas">Bareng</a>
+    <a href="#tempat">Tempat</a>
+  </nav>
+  <div class="theme-switch" id="themeSwitch" role="group" aria-label="Pilih tema warna">
+    <button data-theme="sage" title="Sage: tenang" style="--c:#5b8a6e"></button>
+    <button data-theme="ocean" title="Ocean: fokus" style="--c:#3f7ab0"></button>
+    <button data-theme="lavender" title="Lavender: rileks" style="--c:#7a68b0"></button>
+    <button data-theme="warm" title="Warm: hangat" style="--c:#b87a3e"></button>
+    <button data-theme="night" title="Night: malam" style="--c:#1f2a25"></button>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div>
+      <h1>Grow at your<br>own pace.</h1>
+      <p>Timer fokus, sesi belajar terpandu, pelacak distraksi, dan pengingat istirahat supaya tidak burnout. Semua di satu ruang yang tenang.</p>
+      <div><button class="primary-button big-start" id="oneMin" type="button">🌱 Cuma 1 menit, yuk</button></div>
+      <a href="#metode" class="primary-button">Mulai belajar</a>
+      <p class="theme-note" id="themeNote"></p>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+      <div class="art-ring"><span>🌱</span></div>
+      <div class="floating note-one">☁️ take your time</div>
+      <div class="floating note-two">♡ keep growing</div>
+    </div>
+  </section>
+
+  <section class="section-wrap alt" id="metode">
+    <div class="section-heading">
+      <h2>Sesi belajar terpandu 📖</h2>
+      <p>Tempel materimu (atau unggah .txt / .md), pilih metode, lalu website memandu langkah demi langkah dan mengecek pemahamanmu. Materi dari PDF/PPT: salin teksnya lalu tempel di sini.</p>
+    </div>
+    <div class="card material-card">
+      <input id="matTitle" type="text" placeholder="Judul materi (mis. Bab 3 Fotosintesis)" maxlength="60">
+      <textarea id="matText" rows="6" placeholder="Tempel materi / jurnal / isi slide di sini…"></textarea>
+      <div class="actions" style="justify-content:flex-start">
+        <label class="secondary-button file-btn">Unggah .txt / .md<input id="matFile" type="file" accept=".txt,.md,text/plain" hidden></label>
+        <span class="muted" id="matNote"></span>
+      </div>
+    </div>
+    <div class="method-grid" style="margin-top:20px">
+      <button class="method-card" data-method="pomodoro"><span class="method-icon">🍅</span><h3>Pomodoro</h3><p>Baca per bagian dengan timer 25 menit, lalu istirahat bernapas.</p></button>
+      <button class="method-card" data-method="feynman"><span class="method-icon">💬</span><h3>Feynman</h3><p>Baca, lalu jelaskan dengan kata-katamu. Website cek istilah kunci yang terlewat.</p></button>
+      <button class="method-card" data-method="active"><span class="method-icon">🧠</span><h3>Active Recall</h3><p>Baca, catatan ditutup, tulis ingatanmu, lalu kuis isian.</p></button>
+      <button class="method-card" data-method="spaced"><span class="method-icon">🌼</span><h3>Spaced Repetition</h3><p>Seperti Active Recall, lalu materi dijadwalkan ulang hari ke-1, 3, 7, 14.</p></button>
+    </div>
+    <div class="card" style="margin-top:20px">
+      <h3>Ulasan jatuh tempo 🔁</h3>
+      <div id="dueList" class="chips"></div>
+    </div>
+  </section>
+
+  <section class="section-wrap" id="belajar">
+    <div class="section-heading">
+      <h2>Waktunya fokus ☕</h2>
+      <p>Mulai timer, catat setiap kali kamu terdistraksi, dan lihat polanya di statistik.</p>
+    </div>
+    <div class="two-col">
+      <div class="card timer-card">
+        <div class="timer-tabs">
+          <button class="timer-tab active" data-minutes="25" data-mode="focus">Fokus 25</button>
+          <button class="timer-tab" data-minutes="50" data-mode="focus">Deep 50</button>
+          <button class="timer-tab" data-minutes="5" data-mode="short">Istirahat 5</button>
+          <button class="timer-tab" data-minutes="15" data-mode="long">Istirahat 15</button>
+        </div>
+        <div class="timer-display" id="timerDisplay" role="timer">25:00</div>
+        <p class="muted" id="timerStatus">Saatnya fokus pada satu hal.</p>
+        <div class="actions">
+          <button class="primary-button" id="startTimer">Mulai</button>
+          <button class="secondary-button" id="resetTimer">Ulangi</button>
+        </div>
+        <button class="distract-button" id="distractBtn">⚡ Aku terdistraksi</button>
+        <div class="reason-panel" id="reasonPanel" hidden>
+          <p>Apa penyebabnya?</p>
+          <div class="chips" id="reasonChips"></div>
+        </div>
+        <p class="tiny">Berpindah tab saat timer fokus berjalan juga dicatat otomatis.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-heading"><h3>Tugas hari ini ✎</h3><span class="muted tiny" id="taskDate"></span></div>
+        <form id="taskForm" class="task-form">
+          <input id="taskInput" type="text" placeholder="Apa yang ingin kamu pelajari?" maxlength="100" autocomplete="off">
+          <button type="submit" aria-label="Tambah tugas">+</button>
+        </form>
+        <div id="taskList" class="task-list"></div>
+        <p class="tiny" id="taskProgressMini">0 dari 0 selesai</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-wrap alt" id="progres">
+    <div class="section-heading">
+      <h2>Statistik belajarmu 🌷</h2>
+      <p>Datanya tersimpan di perangkatmu. Bandingkan dengan dirimu kemarin, bukan dengan orang lain.</p>
+    </div>
+    <div class="stat-row">
+      <div class="card stat"><strong id="todayStudyTime">0m</strong><span>Fokus hari ini</span></div>
+      <div class="card stat"><strong id="weeklyStudyTime">0m</strong><span>Total 7 hari</span></div>
+      <div class="card stat"><strong id="todayDistract">0</strong><span>Distraksi hari ini</span></div>
+      <div class="card stat"><strong id="distractRate">–</strong><span>Distraksi per jam fokus</span></div>
+      <div class="card stat"><strong id="taskPercent">0%</strong><span>Tugas selesai</span></div>
+    </div>
+    <div class="two-col">
+      <div class="card"><h3>Jam fokus per hari</h3><div class="bars" id="focusChart"></div></div>
+      <div class="card"><h3>Jumlah distraksi per hari</h3><div class="bars bars-warm" id="distractChart"></div></div>
+    </div>
+    <div class="card" style="margin-top:20px">
+      <h3>Apa yang paling sering mengganggumu? (7 hari)</h3>
+      <div id="reasonStats"></div>
+      <p class="insight" id="insight">Catat distraksi lewat tombol di timer, nanti saran personal muncul di sini.</p>
+    </div>
+  </section>
+
+  <section class="section-wrap" id="suara">
+    <div class="section-heading">
+      <h2>Suara untuk fokus 🎧</h2>
+      <p>Suara dibuat langsung oleh browser. Campur beberapa suara sesukamu.</p>
+    </div>
+    <div class="sound-grid" id="soundGrid"></div>
+    <label class="volume">Volume <input type="range" id="volume" min="0" max="100" value="50"></label>
+    <p class="tiny" id="soundNote">Noise putih, pink, dan cokelat membantu menutupi bunyi sekitar. Binaural beat butuh headphone, bukti ilmiahnya masih beragam, jadi anggap sebagai pelengkap.</p>
+  </section>
+
+  <section class="section-wrap alt" id="jadwal">
+    <div class="section-heading">
+      <h2>Jadwal belajar mingguan 📅</h2>
+      <p>Jadwal yang jelas mengurangi beban memutuskan "mau belajar apa sekarang".</p>
+    </div>
+    <form class="card sched-form" id="schedForm">
+      <input id="schedSubject" type="text" placeholder="Mata pelajaran / topik" maxlength="50" required>
+      <select id="schedDay" aria-label="Hari"></select>
+      <input id="schedTime" type="time" value="16:00" required>
+      <button class="primary-button" type="submit">Tambah</button>
+    </form>
+    <div class="week" id="weekGrid"></div>
+  </section>
+
+  <section class="section-wrap" id="komunitas">
+    <div class="section-heading">
+      <h2>Belajar bareng 🤝</h2>
+      <p>Body doubling: belajar di waktu yang sama dengan orang lain membantu menjaga fokus. Buat sesi, kirim tautannya ke teman, dan semua yang membuka tautan melihat hitungan waktu yang sama.</p>
+    </div>
+    <div class="two-col">
+      <form class="card" id="roomForm">
+        <h3>Buat sesi bareng</h3>
+        <div class="stack">
+          <input id="roomName" type="text" placeholder="Nama sesi (mis. Belajar UTBK)" maxlength="40">
+          <select id="roomMin" aria-label="Durasi">
+            <option value="25">25 menit</option><option value="50">50 menit</option><option value="90">90 menit</option>
+          </select>
+          <button class="primary-button" type="submit">Buat &amp; salin tautan</button>
+        </div>
+        <div id="roomShare" hidden>
+          <p class="tiny">Sesi mulai 2 menit dari sekarang. Tautan sudah disalin, kirim ke temanmu:</p>
+          <input id="roomLink" type="text" readonly>
+        </div>
+      </form>
+      <div class="card" id="roomLive" hidden></div>
+    </div>
+  </section>
+
+  <section class="section-wrap alt" id="tempat">
+    <div class="section-heading">
+      <h2>Tempat belajar yang nyaman 🪴</h2>
+      <p>Centang kondisi ruanganmu dan lihat skor kenyamanannya.</p>
+    </div>
+    <div class="two-col">
+      <div class="card">
+        <div id="comfortList"></div>
+        <div class="progress-track"><div class="progress-fill" id="comfortFill"></div></div>
+        <p class="insight" id="comfortText">Centang yang sudah terpenuhi.</p>
+      </div>
+      <div class="card">
+        <h3>Cari tempat belajar terdekat</h3>
+        <p class="muted">Tombol ini membuka Google Maps di sekitar lokasimu.</p>
+        <div class="chips">
+          <a class="chip" target="_blank" rel="noopener" href="https://www.google.com/maps/search/perpustakaan+terdekat">📚 Perpustakaan</a>
+          <a class="chip" target="_blank" rel="noopener" href="https://www.google.com/maps/search/kafe+untuk+belajar+terdekat">☕ Kafe</a>
+          <a class="chip" target="_blank" rel="noopener" href="https://www.google.com/maps/search/co-working+space+terdekat">💻 Co-working</a>
+          <a class="chip" target="_blank" rel="noopener" href="https://www.google.com/maps/search/taman+terdekat">🌳 Taman</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="quote-section" id="kutipan">
+    <figure class="quote-card">
+      <blockquote id="quoteText"></blockquote>
+      <figcaption id="quoteAuthor"></figcaption>
+    </figure>
+    <div class="quote-actions">
+      <button class="secondary-button" id="quotePrev" aria-label="Kutipan sebelumnya">‹</button>
+      <button class="primary-button" id="quoteNext">Kutipan lain</button>
+      <button class="secondary-button" id="quoteDelete" hidden>Hapus</button>
+    </div>
+    <details class="quote-add">
+      <summary>+ Tambah kutipan favoritmu</summary>
+      <form id="quoteForm">
+        <input id="quoteInput" type="text" placeholder="Isi kutipan" maxlength="200" required>
+        <input id="quoteWho" type="text" placeholder="Nama tokoh" maxlength="50" required>
+        <button class="primary-button" type="submit">Simpan</button>
+      </form>
+    </details>
+  </section>
+</main>
+
+<footer>
+  <a href="#" class="logo">pancaniti<span>✿</span></a>
+  <p>Teman kecil dalam perjalanan belajarmu. Dibuat dengan ♡</p>
+</footer>
+
+<!-- Ruang sesi terpandu -->
+<div class="sesi" id="sesi" hidden>
+  <div class="sesi-box">
+    <div class="sesi-top"><strong id="sesiTitle"></strong><button class="modal-close" id="sesiClose" aria-label="Tutup sesi">×</button></div>
+    <div class="progress-track"><div class="progress-fill" id="sesiBar"></div></div>
+    <div id="sesiBody"></div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
